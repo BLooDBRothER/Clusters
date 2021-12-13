@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import "../style-sheets/style.css"
+import "../style-sheets/style.sass"
 
 console.clear()
 // Firebase Confit
