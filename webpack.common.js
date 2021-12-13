@@ -28,6 +28,11 @@ module.exports = {
         ],
       },
       {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
+      {
         test: /\.(png|jpg|gif|svg)$/i,
         type: "asset/resource",
       },
