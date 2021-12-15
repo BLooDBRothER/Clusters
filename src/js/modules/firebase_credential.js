@@ -10,8 +10,9 @@ const firebaseConfig = {
   messagingSenderId: "757696261414",
   appId: "1:757696261414:web:482a68317384eaee57a5e7",
   measurementId: "G-6J5W1FPTTH",
+  databaseURL: "https://web-clusters-default-rtdb.firebaseio.com/",
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);

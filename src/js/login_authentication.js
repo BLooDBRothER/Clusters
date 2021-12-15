@@ -1,6 +1,7 @@
 import { onAuthStateChanged} from "firebase/auth";
 import { auth, login, logout } from "./modules/_login.js";
 import { user } from "./modules/_user.js";
+import { readDB, writeDB } from "./modules/_database.js";
 
 const loginBtn = document.querySelector(".login-btn");
 const userInfoSection = document.querySelector(".user-info");
@@ -12,7 +13,19 @@ loginBtn.addEventListener("click", (e) => {
   // user.getLoggedInStatus() ? logout() : login();
 });
 
-// Update User data
+// Update User data in DataBase
+async function updateUserDataBase(){
+  const dbData = await readDB(`users/${user.getUid()}`);
+  if(dbData.exists()) return;
+  const temporaryUserData = {
+    name: user.getName(),
+    profilePic: user.getProfilPicUrl(),
+    bio: user.getBio(),
+  }
+  writeDB(`users/${user.getUid()}`, temporaryUserData);
+}
+
+// Update User data Locally
 function updateUserData(){
   user.getLoggedInStatus() 
    ? (userInfoSection.classList.remove("none"), loginBtn.classList.add("none"))
@@ -25,6 +38,7 @@ onAuthStateChanged(auth, (firebaseUser) => {
   if(firebaseUser){
     user.setInitial([firebaseUser.uid, firebaseUser.displayName, firebaseUser.photoURL]);
     updateUserData();
+    updateUserDataBase();
   }
   else{
     user.removeInitial();

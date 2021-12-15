@@ -1,4 +1,4 @@
-export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "", posts = []) {
+export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "None", posts = []) {
     //Getter
     const getUid = () => uid;
     const getName = () => name;
