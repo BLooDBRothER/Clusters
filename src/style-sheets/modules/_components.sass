@@ -8,3 +8,55 @@
   font-family: $primary-font
   background: $secondary-color
   color: $primary-font-color
+
+.post
+  font-family: $primary-font
+  max-width: 300px
+  height: 300px
+  border: 4px solid $primary-color
+  border-radius: 15px
+  padding: 1rem
+  display: flex
+  flex-direction: column
+
+  & > *
+    flex: 1
+
+  &-title
+    font-size: $medium-font
+    text-align: center
+
+  &-description
+    font-size: $small-font
+    flex: 2
+
+  &-link
+    font-family: inherit
+    color: $primary-color
+    font-size: 1.75rem
+    font-weight: 300
+
+  &-link:hover
+    text-decoration: underline
+
+  &-tags
+    flex: 2
+    display: flex
+    justify-content: space-evenly
+    align-items: center
+    flex-wrap: wrap
+
+  &-tag
+    min-width: 50px
+    text-align: center
+    font-size: $small-font
+    border: 2px solid $primary-color
+    padding: 0.5rem
+    border-radius: 10px
+
+  &-footer
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    padding: 1rem
+    font-size: $very-small-font
