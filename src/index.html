@@ -11,7 +11,8 @@
       <h1 class="site-title">Clusters</h1>
       <div class="menu none">
         <nav class="tabs">
-          <a href="#" class="link-reset tab">Posts</a>
+          <a href="#" class="link-reset tab">Create Post</a>
+          <a href="#" class="link-reset tab">My Posts</a>
           <a href="#" class="link-reset tab">Settings</a>
         </nav>
         <div class="user-info">
@@ -57,5 +58,53 @@
         </div>
       </section>
     </main>
+
+    <section class="new-post none">
+      <form class="new-post-form">
+        <h1 class="new-post-title">New Post</h1>
+        <p class="new-post-input-container">
+          <label for="title" class="new-post-label">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            class="input-reset new-post-input"
+            required
+          />
+        </p>
+        <p class="new-post-input-container">
+          <label for="description" class="new-post-label">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            cols="23"
+            rows="1"
+            class="input-reset new-post-textarea"
+            required
+          ></textarea>
+        </p>
+        <p class="new-post-input-container">
+          <label for="link" class="new-post-label">Link</label>
+          <input
+            type="text"
+            name="link"
+            id="link"
+            class="input-reset new-post-input"
+            required
+          />
+        </p>
+        <p class="new-post-input-container">
+          <label class="new-post-label">Tags</label>
+          <input type="text" name="link" class="input-reset new-post-input" required />
+          <div class="new-post-tags">
+            <p class="new-post-tag">tag<span class="tag-delete">&#x2715;</span></p>
+          </div>
+        </p>
+        <section class="new-post-btns">
+          <button class="btn new-post-btn">Cancel</button>
+          <button class="btn new-post-btn inverted-btn">Create</button>
+        </section>
+      </form>
+    </section>
   </body>
 </html>
