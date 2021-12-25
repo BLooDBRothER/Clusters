@@ -97,6 +97,7 @@
           <label for="title" class="new-post-label">Title</label>
           <input
             type="text"
+            data-name="title"
             name="title"
             id="title"
             class="input-reset new-post-input"
@@ -106,6 +107,7 @@
         <p class="new-post-input-container">
           <label for="description" class="new-post-label">Description</label>
           <textarea
+            data-name="description"
             name="description"
             id="description"
             cols="23"
@@ -118,6 +120,7 @@
           <label for="link" class="new-post-label">Link</label>
           <input
             type="text"
+            data-name="link"
             name="link"
             id="link"
             class="input-reset new-post-input"
@@ -125,10 +128,10 @@
           />
         </p>
         <p class="new-post-input-container">
-          <label class="new-post-label">Tags</label>
+          <label for="tag" class="new-post-label">Tags</label>
           <input
             type="text"
-            name="link"
+            name="tag"
             class="input-reset new-post-input tag-input"
           />
         </p>
@@ -142,7 +145,7 @@
         </div>
         <section class="new-post-btns">
           <button class="btn new-post-btn">Cancel</button>
-          <button class="btn new-post-btn inverted-btn">Create</button>
+          <button type="submit" class="btn new-post-btn inverted-btn creat-post-btn">Create</button>
         </section>
       </form>
     </section>
