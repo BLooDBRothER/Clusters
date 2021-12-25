@@ -1,4 +1,4 @@
-export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "None", posts = []) {
+export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "None", posts = {}) {
     //Getter
     const getUid = () => uid;
     const getName = () => name;
@@ -9,7 +9,7 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
   
     //Setter 
     const setBio = (userBio) => bio = userBio; 
-    const setPosts = (post) => posts.push(post);
+    const setPosts = (postID, postObject) => posts[postID] = postObject;
     const setLoggedInStatus = (status) => isLoggedIn = status;
     const setInitial = ([...userData]) => {uid = userData[0]; name = userData[1]; profilePicUrl = userData[2]; setLoggedInStatus(true)};
     const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false)};
