@@ -6,11 +6,11 @@ import { user } from "./modules/_user.js";
 const tagArray = [];
 let formOpen = false;
 
-const createPostBtn = document.querySelector(".create-tab");
+const createPostTabBtn = document.querySelector(".create-tab");
 const createPostForm = document.querySelector(".new-post");
 const tagsContainer = document.querySelector(".new-post-tags");
 const tagInput = document.querySelector(".tag-input");
-const creatPostBtn = document.querySelector(".creat-post-btn");
+const createPostBtn = document.querySelector(".creat-post-btn");
 
 const postDetailsInput = {
     title: document.querySelector(".new-post-input[data-name='title']"),
@@ -18,11 +18,11 @@ const postDetailsInput = {
     link : document.querySelector(".new-post-input[data-name='link']")
 }
 
-createPostBtn.addEventListener("click", creatPostFormToggle);
+createPostTabBtn.addEventListener("click", creatPostFormToggle);
 
 tagInput.addEventListener("keypress", addFormTag);
 
-creatPostBtn.addEventListener("click", creatPost);
+createPostBtn.addEventListener("click", creatPost);
 
 function creatPostFormToggle(e){
     e.preventDefault();
@@ -60,7 +60,7 @@ function creatPost(e){
     const newPost = Post(id, title, description, link, tagArray, user.getName());
     writeDB(`posts/${id}`, newPost.getAsObject());
     updatePostToDatabase(newPost);
-    newPost.get
+    clearAndHideCreatePostForm();
 }
 
 function updatePostToDatabase(postObject){
@@ -91,5 +91,5 @@ function clearAndHideCreatePostForm(){
         postDetailsInput[input].value = "";
     }
     tagsContainer.innerHTML = '';
-    creatPostBtn.click();
+    createPostTabBtn.click();
 }

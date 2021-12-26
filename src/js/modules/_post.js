@@ -34,3 +34,14 @@ export function Post(id, title, description, link, tags, author, timestamp=new D
 
     return {getID, getTitle, getDescription, getLink, getTags, getTimestamp, getAuthor, getAsObject, getIDAsObject, setID, setAuthor, setTags, setTitle, setDescription, setLink, setTimestamp};
 }
+
+export function Posts(posts={}){
+    const getPosts = () => posts;
+    const getPost = (postID) => posts[postID];
+
+    const setPosts = (allPosts) => {posts = allPosts};
+
+    return {getPosts, getPost, setPosts}
+}
+
+export const allPosts = Posts();

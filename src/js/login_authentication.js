@@ -2,6 +2,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, login, logout } from "./modules/_login.js";
 import { user } from "./modules/_user.js";
 import { readDB, writeDB } from "./modules/_database.js";
+import { allPosts } from "./modules/_post.js";
 
 const loginBtn = document.querySelector(".login-btn");
 const menuSection = document.querySelector(".menu");
@@ -36,7 +37,11 @@ function updateUserData(){
     user.getProfilPicUrl();
 }
 
-onAuthStateChanged(auth, (firebaseUser) => {
+onAuthStateChanged(auth, async (firebaseUser) => {
+  const postsFromDB = (await readDB(`posts`)).val();
+  if(postsFromDB){
+    allPosts.setPosts(postsFromDB);
+  }
   if (firebaseUser) {
     user.setInitial([
       firebaseUser.uid,
