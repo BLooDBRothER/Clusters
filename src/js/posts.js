@@ -1,4 +1,4 @@
-import { getPostId, writeDB } from "./modules/_database.js";
+import { getPostId, updateDB, writeDB } from "./modules/_database.js";
 import { Post } from "./modules/_post.js";
 import { formTagTemplate } from "./modules/_template.js";
 import { user } from "./modules/_user.js";
@@ -59,6 +59,13 @@ function creatPost(e){
     const link = postDetailsInput.link.value;
     const newPost = Post(id, title, description, link, tagArray, user.getName());
     writeDB(`posts/${id}`, newPost.getAsObject());
+    updatePostToDatabase(newPost);
+    newPost.get
+}
+
+function updatePostToDatabase(postObject){
+    writeDB(`posts/${postObject.getID()}`, postObject.getAsObject());
+    updateDB(postObject.getIDAsObject(user.getUid()));
 }
 
 function checkInputValuePresent(){

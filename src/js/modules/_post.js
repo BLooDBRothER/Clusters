@@ -17,6 +17,11 @@ export function Post(id, title, description, link, tags, author, timestamp=new D
             timestamp: getTimestamp()
         }
     }
+    const getIDAsObject = (userID) => {
+        const userPost = {}; 
+        userPost[`user-posts/${userID}/${getID()}`] = true;
+        return userPost; 
+    }
 
     // setter
     const setID = (idValue) => id = idValue;
@@ -27,5 +32,5 @@ export function Post(id, title, description, link, tags, author, timestamp=new D
     const setTimestamp = (timestampValue) => timestamp = timestampValue;
     const setAuthor = (authorValue) => authorValue = author;
 
-    return {getID, getTitle, getDescription, getLink, getTags, getTimestamp, getAuthor, getAsObject, setID, setAuthor, setTags, setTitle, setDescription, setLink, setTimestamp};
+    return {getID, getTitle, getDescription, getLink, getTags, getTimestamp, getAuthor, getAsObject, getIDAsObject, setID, setAuthor, setTags, setTitle, setDescription, setLink, setTimestamp};
 }
