@@ -3,7 +3,7 @@ import { Post } from "./modules/_post.js";
 import { formTagTemplate } from "./modules/_template.js";
 import { user } from "./modules/_user.js";
 
-const tagArray = [];
+let tagArray = [];
 let formOpen = false;
 
 const createPostTabBtn = document.querySelector(".create-tab");
@@ -87,6 +87,7 @@ function removeInputErroColor(){
 }
 
 function clearAndHideCreatePostForm(){
+    tagArray = [];
     for(let input in postDetailsInput){
         postDetailsInput[input].value = "";
     }
