@@ -14,12 +14,12 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
     const setBio = (userBio) => bio = userBio; 
     const setPost = (postID, postObject) => posts[postID] = postObject;
     const setLoggedInStatus = (status) => isLoggedIn = status;
-    const setInitial = ([...userData]) => {
+    const setInitial = async ([...userData]) => {
         uid = userData[0];
         name = userData[1];
         profilePicUrl = userData[2];
         setLoggedInStatus(true);
-        setPosts()
+        await setPosts();
     };
     const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false)};
 

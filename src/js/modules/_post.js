@@ -1,4 +1,7 @@
-export function Post(id, title, description, link, tags, author, timestamp=new Date()){
+import { postTemplate } from "./_template";
+import { user } from "./_user";
+
+export function Post(id, title, description, link, tags, author, timestamp=Date.now()){
     // getter
     const getID = () => id;
     const getTitle = () => title;
@@ -36,12 +39,38 @@ export function Post(id, title, description, link, tags, author, timestamp=new D
 }
 
 export function Posts(posts={}){
+    let isPostLoaded = false;
+    let isUserPostLoaded = false;
     const getPosts = () => posts;
     const getPost = (postID) => posts[postID];
+    const getIsPostLoaded = () => isPostLoaded;
 
+    const setUserPostLoaded = (value) => isUserPostLoaded = value;
     const setPosts = (allPosts) => {posts = allPosts};
 
-    return {getPosts, getPost, setPosts}
+    const loadPost = () => {
+        for(let postId in posts){
+            const post = posts[postId]; 
+            document.querySelector(".posts").appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author));
+        }
+        isPostLoaded = true;
+    }
+
+    const loadUserPost = () => {
+        const userPost = user.getPosts();
+        const myPostContainer = document.querySelector(".my-posts");
+        if(Object.keys(userPost).length === 0){
+            myPostContainer.innerHTML = "<h3>No Posts Yet Click Create Post to create post!!</h3>";
+        }
+        myPostContainer.removeChild(myPostContainer.lastChild);
+        for(let postId in userPost){
+            const post = userPost[postId]; 
+            myPostContainer.appendChild(postTemplate(postId, post.getTitle(), post.getDescription(), post.getLink(), post.getTags(), post.getTimestamp(), post.getAuthor()));
+        }
+        isUserPostLoaded = true;
+    }
+
+    return {getPosts, getPost, getIsPostLoaded, setPosts, setUserPostLoaded, loadPost, loadUserPost}
 }
 
 export const allPosts = Posts();

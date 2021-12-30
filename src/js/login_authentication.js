@@ -7,6 +7,8 @@ import { allPosts } from "./modules/_post.js";
 const loginBtn = document.querySelector(".login-btn");
 const menuSection = document.querySelector(".menu");
 const userInfoSection = document.querySelector(".user-info");
+const profilePicTag = userInfoSection.querySelector(".user-profile-picture");
+
 
 loginBtn.addEventListener("click", (e) => {
   if (!user.getLoggedInStatus()) {
@@ -30,11 +32,16 @@ async function updateUserDataBase(){
 // Update User data Locally
 function updateUserData(){
   user.getLoggedInStatus() 
-   ? (menuSection.classList.remove("none"), loginBtn.classList.add("none"))
-   : (menuSection.classList.add("none"), loginBtn.classList.remove("none"));
+   ? (menuSection.classList.remove("none"), loginBtn.classList.add("none"), profilePicTag.addEventListener("click", logout))
+   : (menuSection.classList.add("none"), loginBtn.classList.remove("none"), profilePicTag.removeEventListener("click", logout));
   userInfoSection.querySelector(".user-name").innerText = user.getName();
-  userInfoSection.querySelector(".user-profile-picture").src =
+  profilePicTag.src =
     user.getProfilPicUrl();
+}
+
+function clearUserPost(){
+  allPosts.setUserPostLoaded(false);
+  document.querySelector(".my-posts").innerHTML = "<h3>Please Login to see you feed!!!</h3>";
 }
 
 onAuthStateChanged(auth, async (firebaseUser) => {
@@ -43,16 +50,19 @@ onAuthStateChanged(auth, async (firebaseUser) => {
     allPosts.setPosts(postsFromDB);
   }
   if (firebaseUser) {
-    user.setInitial([
+    await user.setInitial([
       firebaseUser.uid,
       firebaseUser.displayName,
       firebaseUser.photoURL,
     ]);
     updateUserData();
     updateUserDataBase();
+    allPosts.loadUserPost();
   }
   else{
     user.removeInitial();
-    updateUserData();
+    updateUserData(); 
+    clearUserPost();   
   }
+  if(!allPosts.getIsPostLoaded()) allPosts.loadPost();
 });
