@@ -8,7 +8,15 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/new",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/myposts",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/bookmarks",
         "destination": "/index.html"
       }
     ]
