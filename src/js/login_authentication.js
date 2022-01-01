@@ -3,6 +3,7 @@ import { auth, login, logout } from "./modules/_login.js";
 import { user } from "./modules/_user.js";
 import { readDB, writeDB } from "./modules/_database.js";
 import { allPosts } from "./modules/_post.js";
+import { detachBookmarkListener, initializeBookmarkListener } from "./modules/_bookmark.js";
 
 const loginBtn = document.querySelector(".login-btn");
 const menuSection = document.querySelector(".menu");
@@ -40,7 +41,6 @@ function updateUserData(){
 }
 
 function clearUserPost(){
-  allPosts.setUserPostLoaded(false);
   document.querySelector(".my-posts").innerHTML = "<h3>Please Login to see you feed!!!</h3>";
 }
 
@@ -55,14 +55,16 @@ onAuthStateChanged(auth, async (firebaseUser) => {
       firebaseUser.displayName,
       firebaseUser.photoURL,
     ]);
+    initializeBookmarkListener();
     updateUserData();
     updateUserDataBase();
     allPosts.loadUserPost();
   }
   else{
+    detachBookmarkListener();
     user.removeInitial();
     updateUserData(); 
     clearUserPost();   
   }
-  if(!allPosts.getIsPostLoaded()) allPosts.loadPost();
+  allPosts.loadPost();
 });

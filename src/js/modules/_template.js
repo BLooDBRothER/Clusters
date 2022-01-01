@@ -8,7 +8,7 @@ export const formTagTemplate = (tagValue) => {
     return parent;
 }
 
-export const postTemplate = (id, title, description, link, tags=[], timestamp, author) => {
+export const postTemplate = (id, title, description, link, tags=[], timestamp, author, isBookmarked) => {
     const parent = document.createElement("div");
     parent.classList.add("post");
     parent.dataset.id = id;
@@ -27,7 +27,7 @@ export const postTemplate = (id, title, description, link, tags=[], timestamp, a
                         </div>
                         <div class="post-footer">
                             <p class="post-timestamp">${dateString}</p>
-                            <img class="post-bookmark" src=${bookmark} alt="bookmark">
+                            <img class="post-bookmark" src=${isBookmarked ? bookmarked : bookmark} alt="bookmark" data-id=${id}>
                             <p class="post-author">${author}</p>
                         </div>`
     return parent;

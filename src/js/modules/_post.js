@@ -1,3 +1,4 @@
+import { bookmarkFunction } from "./_bookmark";
 import { postTemplate } from "./_template";
 import { user } from "./_user";
 
@@ -39,21 +40,20 @@ export function Post(id, title, description, link, tags, author, timestamp=Date.
 }
 
 export function Posts(posts={}){
-    let isPostLoaded = false;
-    let isUserPostLoaded = false;
     const getPosts = () => posts;
     const getPost = (postID) => posts[postID];
-    const getIsPostLoaded = () => isPostLoaded;
 
-    const setUserPostLoaded = (value) => isUserPostLoaded = value;
     const setPosts = (allPosts) => {posts = allPosts};
 
     const loadPost = () => {
+        const postConatiner = document.querySelector(".posts"); 
+        postConatiner.innerHTML = '';
         for(let postId in posts){
-            const post = posts[postId]; 
-            document.querySelector(".posts").appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author));
+            const post = posts[postId];
+            console.log(user.getBookmarks());
+            postConatiner.appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author, user.getBookmark(postId)));
+            postConatiner.lastChild.querySelector(".post-bookmark").addEventListener("click", bookmarkFunction);
         }
-        isPostLoaded = true;
     }
 
     const loadUserPost = () => {
@@ -65,12 +65,45 @@ export function Posts(posts={}){
         myPostContainer.removeChild(myPostContainer.lastChild);
         for(let postId in userPost){
             const post = userPost[postId]; 
-            myPostContainer.appendChild(postTemplate(postId, post.getTitle(), post.getDescription(), post.getLink(), post.getTags(), post.getTimestamp(), post.getAuthor()));
+            myPostContainer.appendChild(postTemplate(postId, post.getTitle(), post.getDescription(), post.getLink(), post.getTags(), post.getTimestamp(), post.getAuthor(), user.getBookmark(postId)));
         }
-        isUserPostLoaded = true;
     }
 
-    return {getPosts, getPost, getIsPostLoaded, setPosts, setUserPostLoaded, loadPost, loadUserPost}
+    const addBookmarkPost = (postId) => {
+        console.log(user.getBookmarks());
+        const bookmarkPostContainer = document.querySelector(".bookmark-posts");
+        const isH3Present = bookmarkPostContainer.querySelector("h3");
+        if(isH3Present){
+            bookmarkPostContainer.removeChild(isH3Present);
+        }
+        const post = allPosts.getPost(postId); 
+        bookmarkPostContainer.appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author, user.getBookmark(postId)));
+    }
+
+    const deleteBookmarkPost = (postId) => {
+        console.log(user.getPosts());
+        const bookmarkPostContainer = document.querySelector(".bookmark-posts");
+        if(Object.keys(user.getBookmarks()).length === 0){
+            bookmarkPostContainer.innerHTML = "<h3>No Bookmarked Posts!!</h3>";
+            return;
+        }
+        bookmarkPostContainer.removeChild(bookmarkPostContainer.querySelector(`.post[data-id='${postId}']`));
+    }
+
+    const loadBookmarkedPost = () => {
+        const bookmarkedPost = user.getBookmarks();
+        const bookmarkPostContainer = document.querySelector(".bookmark-posts");
+        bookmarkPostContainer.innerHTML = "<h3>No Bookmarked Posts!!</h3>";
+        if(Object.keys(bookmarkedPost).length === 0){
+            return;
+        }
+        bookmarkPostContainer.removeChild(bookmarkPostContainer.lastChild);
+        for(let postId in bookmarkedPost){
+            const post = allPosts.getPost(postId); 
+            bookmarkPostContainer.appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author, user.getBookmark(postId)));
+        }
+    }
+    return {getPosts, getPost, setPosts, loadPost, loadUserPost,  addBookmarkPost, deleteBookmarkPost, loadBookmarkedPost}
 }
 
 export const allPosts = Posts();

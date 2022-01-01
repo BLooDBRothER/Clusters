@@ -1,6 +1,7 @@
 import { getPostId, updateDB, writeDB } from "./modules/_database.js";
 import { Post } from "./modules/_post.js";
 import { formTagTemplate } from "./modules/_template.js";
+import { changePath, tabMap } from "./modules/_url_handler.js";
 import { user } from "./modules/_user.js";
 
 let tagArray = [];
@@ -26,7 +27,8 @@ createPostBtn.addEventListener("click", creatPost);
 
 function creatPostFormToggle(e){
     e.preventDefault();
-    formOpen ? createPostForm.classList.add("none") : createPostForm.classList.remove("none");
+    // tabMap[user.getCurrentPage()] && tabMap[user.getCurrentPage()].click();
+    formOpen ? (createPostForm.classList.add("none"), changePath("")) : (createPostForm.classList.remove("none"), changePath("new"));
     formOpen = !formOpen;
 }
 

@@ -1,7 +1,7 @@
 import { getDatabase, set, ref, get, push, update } from "firebase/database";
 import { app } from "./firebase_credential.js";
 
-const database = getDatabase(app);
+export const database = getDatabase(app);
 
 export function writeDB(reference, data){
     set(ref(database, reference), data)
