@@ -1,22 +1,39 @@
 import { user } from "./modules/_user";
-import { tabMap } from "./modules/_url_handler";
+import { changePath, tabMap } from "./modules/_url_handler";
 
-function goToHomePage(){
-    tabMap[user.getCurrentPage()].click();
+export const postConatiner = {
+    home: document.querySelector(".all-posts"),
+    myposts: document.querySelector(".my-posts"),
+    bookmarks: document.querySelector(".bookmark-posts")
 }
 
 window.addEventListener("popstate", (e) => {
-    console.log(e.state);
-    if(!e.state?.pathName) {
-        goToHomePage();
-        return;
-    }
-    tabMap[user.getCurrentPage()].click();
-    tabMap[e.state.pathName].click();
+    tabMap[e.state?.pathName] ? tabMap[e.state.pathName].click() : enableAllPostCotainer();
 });
 
 window.addEventListener("DOMContentLoaded", () => {
-    let tabPath = window.location.pathname.replace(/\//gi, "");
+    let tabPath = detectTabPath();
     if(!tabPath) return;
     tabMap[tabPath].click();
 });
+
+export function disablePostContainer(){
+    const containerToHide = postConatiner[user.getCurrentPage()] || postConatiner["home"];
+    containerToHide.classList.add("none");
+}
+
+
+function enableAllPostCotainer(){
+    disablePostContainer();
+    const allPostContainer = document.querySelector(".all-posts");
+    const postContainerTitle = document.querySelector(".posts-conatiner-title");
+
+    postContainerTitle.innerText = "All Posts"
+    allPostContainer.classList.remove("none");
+    changePath("");
+}
+
+export function detectTabPath(){
+    const tabPath = window.location.pathname.replace(/\//gi, "");
+    return tabPath;
+}
