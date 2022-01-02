@@ -3,9 +3,9 @@ import { Post } from "./modules/_post.js";
 import { formTagTemplate } from "./modules/_template.js";
 import { changePath, tabMap } from "./modules/_url_handler.js";
 import { user } from "./modules/_user.js";
+import { detectTabPath } from "./url_handler.js";
 
 let tagArray = [];
-let formOpen = false;
 
 const createPostTabBtn = document.querySelector(".create-tab");
 const createPostForm = document.querySelector(".new-post");
@@ -27,9 +27,8 @@ createPostBtn.addEventListener("click", creatPost);
 
 function creatPostFormToggle(e){
     e.preventDefault();
-    // tabMap[user.getCurrentPage()] && tabMap[user.getCurrentPage()].click();
-    formOpen ? (createPostForm.classList.add("none"), changePath("")) : (createPostForm.classList.remove("none"), changePath("new"));
-    formOpen = !formOpen;
+    createPostForm.classList.remove("none");
+    detectTabPath() === "new" ? user.setCurrentPage("new") : changePath("new");
 }
 
 function addFormTag(e){

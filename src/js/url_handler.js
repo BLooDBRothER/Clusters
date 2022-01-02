@@ -4,7 +4,8 @@ import { changePath, tabMap } from "./modules/_url_handler";
 export const postConatiner = {
     home: document.querySelector(".all-posts"),
     myposts: document.querySelector(".my-posts"),
-    bookmarks: document.querySelector(".bookmark-posts")
+    bookmarks: document.querySelector(".bookmark-posts"),
+    new: document.querySelector(".new-post")
 }
 
 window.addEventListener("popstate", (e) => {
@@ -19,6 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 export function disablePostContainer(){
     const containerToHide = postConatiner[user.getCurrentPage()] || postConatiner["home"];
+    console.log(containerToHide);
     containerToHide.classList.add("none");
 }
 
