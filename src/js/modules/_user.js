@@ -42,7 +42,16 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
     };
     const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false); clearBookmark()};
 
-    const setPosts = (data) => {
+    let initialFetch = true;
+    const setPosts = async (data) => {
+        if(!initialFetch){
+            const postsFromDB = (await readDB(`posts`)).val();
+            if(postsFromDB){
+                allPosts.setPosts(postsFromDB);
+                allPosts.loadPost();
+            }
+        }
+        console.log(data.val());
         const userPostsID = data.val();
         for(let userPostID in userPostsID){
             const eachUserPost = allPosts.getPost(userPostID);
@@ -50,6 +59,7 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
             setPost(userPostID, postObject);
         }
         allPosts.loadUserPost();
+        initialFetch = false;
     }
 
     const setBookmarksFromDB = async () => {

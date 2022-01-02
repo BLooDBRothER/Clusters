@@ -93,5 +93,5 @@ function clearAndHideCreatePostForm(){
         postDetailsInput[input].value = "";
     }
     tagsContainer.innerHTML = '';
-    createPostTabBtn.click();
+    history.back();
 }
