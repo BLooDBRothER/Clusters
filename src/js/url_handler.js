@@ -20,7 +20,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 export function disablePostContainer(){
     const containerToHide = postConatiner[user.getCurrentPage()] || postConatiner["home"];
-    console.log(containerToHide);
     containerToHide.classList.add("none");
 }
 

@@ -1,4 +1,4 @@
-import { changePath, tabMap } from "./modules/_url_handler";
+import { changePath } from "./modules/_url_handler";
 import { user } from "./modules/_user";
 import { detectTabPath, disablePostContainer } from "./url_handler";
 

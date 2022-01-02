@@ -1,7 +1,7 @@
 import { getPostId, updateDB, writeDB } from "./modules/_database.js";
 import { Post } from "./modules/_post.js";
 import { formTagTemplate } from "./modules/_template.js";
-import { changePath, tabMap } from "./modules/_url_handler.js";
+import { changePath } from "./modules/_url_handler.js";
 import { user } from "./modules/_user.js";
 import { detectTabPath } from "./url_handler.js";
 
@@ -12,6 +12,7 @@ const createPostForm = document.querySelector(".new-post");
 const tagsContainer = document.querySelector(".new-post-tags");
 const tagInput = document.querySelector(".tag-input");
 const createPostBtn = document.querySelector(".creat-post-btn");
+const cancelBtn = document.querySelector(".cancel-btn");
 
 const postDetailsInput = {
     title: document.querySelector(".new-post-input[data-name='title']"),
@@ -86,6 +87,11 @@ function removeInputErroColor(){
         postDetailsInput[input].style.borderColor = "#bb86fc";
     }
 }
+
+cancelBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    clearAndHideCreatePostForm();
+});
 
 function clearAndHideCreatePostForm(){
     tagArray = [];

@@ -52,7 +52,6 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
                 allPosts.loadPost();
             }
         }
-        console.log(data.val());
         const userPostsID = data.val();
         for(let userPostID in userPostsID){
             const eachUserPost = allPosts.getPost(userPostID);
