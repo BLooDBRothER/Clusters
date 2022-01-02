@@ -16,16 +16,13 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
     const addPostToBookmark = (postId) => {
         const bookmarkObj = {};
         const ref = `user-bookmarks/${uid}/${postId}`;
-        // if(bookmarkes[postId]){
-        //     bookmarkObj[ref] = null;
-        //     delete bookmarkes[postId];
-        // }
-        // else{
-        //     bookmarkObj[ref] = bookmarkes[postId] = true;
-        // }
         bookmarkObj[ref] = bookmarkes[postId] ? null : true;
         updateDB(bookmarkObj);
         return bookmarkObj[ref];
+    }
+
+    const clearBookmark = () => {
+        bookmarkes = {};
     }
   
     //Setter 
@@ -43,7 +40,7 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
         // await setPosts();
         await setBookmarksFromDB();
     };
-    const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false)};
+    const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false); clearBookmark()};
 
     const setPosts = (data) => {
         const userPostsID = data.val();
