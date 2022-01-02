@@ -13,7 +13,7 @@ export const postTemplate = (id, title, description, link, tags=[], timestamp, a
     parent.classList.add("post");
     parent.dataset.id = id;
     const date = new Date(timestamp);
-    const dateString = `${date.getDay()} / ${date.getMonth()} / ${date.getFullYear()}`
+    const dateString = `${date.getDay()+1} / ${date.getMonth()+1} / ${date.getFullYear()}`
     parent.innerHTML = `<h2 class="post-title">${title}</h2>
                         <p class="post-description">
                             ${description}

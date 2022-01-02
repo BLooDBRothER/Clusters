@@ -14,6 +14,7 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
     const getBookmarks = () => bookmarkes;
 
     const addPostToBookmark = (postId) => {
+        if(!isLoggedIn) return;
         const bookmarkObj = {};
         const ref = `user-bookmarks/${uid}/${postId}`;
         bookmarkObj[ref] = bookmarkes[postId] ? null : true;
