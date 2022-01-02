@@ -13,7 +13,6 @@ export const bookmarkFunction = (e) => {
 }
 
 function handleBookmarksData(data){
-    console.log(data.val(),data.key)
     user.setBookmarks(data.val());
     allPosts.loadBookmarkedPost();
 }

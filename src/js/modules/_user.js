@@ -24,7 +24,6 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
         //     bookmarkObj[ref] = bookmarkes[postId] = true;
         // }
         bookmarkObj[ref] = bookmarkes[postId] ? null : true;
-        console.log(bookmarkObj)
         updateDB(bookmarkObj);
         return bookmarkObj[ref];
     }
@@ -41,24 +40,24 @@ export function User(uid='', name='', profilePicUrl='', isLoggedIn=true, bio = "
         name = userData[1];
         profilePicUrl = userData[2];
         setLoggedInStatus(true);
-        await setPosts();
+        // await setPosts();
         await setBookmarksFromDB();
     };
     const removeInitial = () => {uid = ''; name = ''; profilePicUrl = ''; setLoggedInStatus(false)};
 
-    const setPosts = async ()=>{
-        const userPostsID = (await readDB(`user-posts/${getUid()}`)).val();
+    const setPosts = (data) => {
+        const userPostsID = data.val();
         for(let userPostID in userPostsID){
             const eachUserPost = allPosts.getPost(userPostID);
             const postObject = Post(userPostID, eachUserPost.title, eachUserPost.description, eachUserPost.link, eachUserPost.tags, eachUserPost.author, new Date(eachUserPost.timestamp));
             setPost(userPostID, postObject);
         }
+        allPosts.loadUserPost();
     }
 
     const setBookmarksFromDB = async () => {
         const userBookmark = (await readDB(`user-bookmarks/${getUid()}`)).val();
         bookmarkes = userBookmark || {};
-        console.log(bookmarkes);
     }
     
     const setBookmarks = (posts) => {

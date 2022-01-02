@@ -4,6 +4,7 @@ import { user } from "./modules/_user.js";
 import { readDB, writeDB } from "./modules/_database.js";
 import { allPosts } from "./modules/_post.js";
 import { detachBookmarkListener, initializeBookmarkListener } from "./modules/_bookmark.js";
+import { detachUserPostListener, initializeUserPostListener } from "./modules/_user_post_loader.js";
 
 const loginBtn = document.querySelector(".login-btn");
 const menuSection = document.querySelector(".menu");
@@ -44,6 +45,16 @@ function clearUserPost(){
   document.querySelector(".my-posts").innerHTML = "<h3>Please Login to see you feed!!!</h3>";
 }
 
+function initializeListener(){
+  initializeUserPostListener();
+  initializeBookmarkListener();
+}
+
+function detachListener(){
+  detachBookmarkListener();
+  detachUserPostListener();
+}
+
 onAuthStateChanged(auth, async (firebaseUser) => {
   const postsFromDB = (await readDB(`posts`)).val();
   if(postsFromDB){
@@ -55,13 +66,13 @@ onAuthStateChanged(auth, async (firebaseUser) => {
       firebaseUser.displayName,
       firebaseUser.photoURL,
     ]);
-    initializeBookmarkListener();
+    initializeListener();
     updateUserData();
     updateUserDataBase();
-    allPosts.loadUserPost();
+    // allPosts.loadUserPost();
   }
   else{
-    detachBookmarkListener();
+    detachListener();
     user.removeInitial();
     updateUserData(); 
     clearUserPost();   
