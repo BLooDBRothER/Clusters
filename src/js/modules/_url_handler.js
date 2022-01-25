@@ -8,5 +8,6 @@ export const tabMap = {
 
 export const changePath = (pathName) => {
     user.setCurrentPage(pathName);
+    if(!pathName) return;
     window.history.pushState({pathName}, null, `/${pathName}`);
 }
