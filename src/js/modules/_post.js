@@ -40,19 +40,37 @@ export function Post(id, title, description, link, tags, author, timestamp=Date.
 }
 
 export function Posts(posts={}){
+    let filteredPost;
     const getPosts = () => posts;
     const getPost = (postID) => posts[postID];
 
-    const setPosts = (allPosts) => {posts = allPosts};
+    const setPosts = (allPosts) => {posts = filteredPost = allPosts};
 
     const loadPost = () => {
         const postConatiner = document.querySelector(".posts"); 
         postConatiner.innerHTML = '';
-        for(let postId in posts){
+        for(let postId in filteredPost){
             const post = posts[postId];
             postConatiner.appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author, user.getBookmark(postId)));
             postConatiner.lastChild.querySelector(".post-bookmark").addEventListener("click", bookmarkFunction);
         }
+    }
+
+    const searchPost = (key) => {
+        if(key === ''){
+            filteredPost = posts;
+            loadPost();
+            return;
+        }
+        filteredPost = {};
+        for(let postId in posts){
+            const post = posts[postId];
+            const re = new RegExp(key, 'gi');
+            if(post.title.match(re)){
+                filteredPost[postId] = post;
+            }
+        }
+        loadPost();
     }
 
     const loadUserPost = () => {
@@ -82,7 +100,7 @@ export function Posts(posts={}){
             bookmarkPostContainer.appendChild(postTemplate(postId, post.title, post.description, post.link, post.tags, post.timestamp, post.author, user.getBookmark(postId)));
         }
     }
-    return {getPosts, getPost, setPosts, loadPost, loadUserPost, loadBookmarkedPost}
+    return {getPosts, getPost, setPosts, loadPost, loadUserPost, loadBookmarkedPost, searchPost}
 }
 
 export const allPosts = Posts();

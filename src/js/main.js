@@ -8,3 +8,4 @@ import "./login_authentication.js"
 import "./home.js"
 import "./posts_creation.js"
 import "./url_handler"
+import "./search";
